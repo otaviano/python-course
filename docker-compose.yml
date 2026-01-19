@@ -1,0 +1,23 @@
+services:
+  mongodb:
+    image: mongo
+    container_name: mongodb
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: rootuser
+      MONGO_INITDB_ROOT_PASSWORD: securepassword
+    volumes:
+      - mongodb-data:/data/db
+    ports:
+      - "27017:27017"
+    restart: unless-stopped
+
+  web:
+    build: .
+    ports:
+      - "8000:80"
+    volumes:
+      - .:/app
+
+volumes:
+  mongodb-data:
+    name: mongodb-data

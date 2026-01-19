@@ -8,3 +8,4 @@ class CreatePersonCommand(BaseModel):
     neighbor: str
     city: str
     is_pep: bool
+    
