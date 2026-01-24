@@ -1,8 +1,9 @@
-from infra.database import items_collection
 from models.person import Person
+from bson import ObjectId
+from typing import Optional
 
 class PersonRepository:
-    def __init__(self, collection=items_collection):
+    def __init__(self, collection):
         self.collection = collection
 
     async def save(self, item: Person) -> str:
@@ -15,10 +16,9 @@ class PersonRepository:
         return [Person(**{k: v for k, v in doc.items() if k != "_id"}) for doc in docs]
     
 
-    async def get_by_id(self, id) -> Person | None:
-        doc = await self.collection.find_one({"id": id})
-
+    async def get_by_id(self, id: str) -> Optional[Person]:
+        doc = await self.collection.find_one({"_id": ObjectId(id)})
         if doc:
-            return [Person(**{k: v for k, v in doc.items() if k != "_id"})]
+            return Person(**{k: v for k, v in doc.items() if k != "_id"})
         
         return None

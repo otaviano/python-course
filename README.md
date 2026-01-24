@@ -1,6 +1,6 @@
 # Python Course Project: Person API
 
-This project is part of the Udemy course [Python 3 do Zero ao Avançado](https://www.udemy.com/course/python-3-do-zero-ao-avancado/). It demonstrates building a REST API for managing persons using FastAPI, MongoDB, and Docker.
+This project is part of the Udemy course [Python 3 do Zero ao Avançado](https://www.udemy.com/course/python-3-do-zero-ao-avancado/). It demonstrates building a REST API for managing persons using FastAPI, MongoDB, and Docker with modern software architecture patterns.
 
 ## Features
 
@@ -8,15 +8,19 @@ This project is part of the Udemy course [Python 3 do Zero ao Avançado](https:/
 - Asynchronous operations with Motor (MongoDB async driver)
 - Containerized with Docker and Docker Compose
 - Clean architecture with CQRS pattern (Commands and Queries)
+- Dependency Injection using FastAPI's `Depends`
+- Environment-based configuration management
+- Type-safe data models with Pydantic
 
 ## Technologies Used
 
-- **FastAPI**: Modern, fast web framework for building APIs
+- **FastAPI**: Modern, fast web framework for building APIs with automatic DI
 - **Uvicorn**: ASGI server for running FastAPI
 - **Motor**: Asynchronous MongoDB driver
 - **Pydantic**: Data validation and serialization
 - **MongoDB**: NoSQL database
 - **Docker & Docker Compose**: Containerization
+- **Python 3.8+**: Programming language
 
 ## Installation
 
@@ -34,6 +38,19 @@ This project is part of the Udemy course [Python 3 do Zero ao Avançado](https:/
    ```
 
    This will start MongoDB and the web application.
+
+## Configuration
+
+The application uses environment-based configuration:
+
+- **Development**: Default settings for local development
+- **Production**: Uses environment variables for production deployment
+
+### Environment Variables
+
+For production deployment, set the following environment variable:
+- `ENV=production`
+- `PROD_DB_URL`: MongoDB connection URL for production
 
 ## Usage
 
@@ -72,15 +89,41 @@ The API will be available at `http://localhost:8000`.
 }
 ```
 
+## Architecture
+
+This project follows Clean Architecture principles with CQRS pattern:
+
+### Dependency Injection
+- Uses FastAPI's built-in DI system with `Depends`
+- Dependencies are injected from outer layers to inner layers
+- Easy to test and maintain
+
+### Layers
+- **Presentation Layer** (`main.py`): FastAPI routes and DI setup
+- **Application Layer** (`features/`): CQRS handlers (Commands and Queries)
+- **Infrastructure Layer** (`infra/`): Database connection and repository implementations
+- **Domain Layer** (`models/`): Business entities and validation
+
 ## Project Structure
 
-- `main.py`: FastAPI application entry point
-- `features/`: CQRS handlers for create and get operations
-- `infra/`: Database connection and repository
-- `models/`: Pydantic models for Person and Address
-- `requirements.txt`: Python dependencies
-- `dockerfile`: Docker image configuration
-- `docker-compose.yml`: Multi-container setup
+```
+python-course/
+├── main.py                  # FastAPI app with DI configuration
+├── settings.py              # Configuration management (Dev/Prod)
+├── requirements.txt         # Python dependencies
+├── dockerfile               # Docker image configuration
+├── docker-compose.yml       # Multi-container setup
+├── features/                # Application layer (CQRS)
+│   ├── create_person/
+│   └── get_person/
+├── infra/                   # Infrastructure layer
+│   ├── database.py          # Database connection (DI-enabled)
+│   └── person_repository.py # Data access layer
+├── models/                  # Domain layer
+│   ├── person.py
+│   └── address.py
+└── README.md
+```
 
 ## Development
 
@@ -97,6 +140,18 @@ To run locally without Docker:
    ```bash
    uvicorn main:app --reload
    ```
+
+### Running Tests
+
+```bash
+pytest
+```
+
+### Code Quality
+
+- Uses type hints throughout the codebase
+- Follows PEP 8 style guidelines
+- Implements proper error handling
 
 ## Contributing
 

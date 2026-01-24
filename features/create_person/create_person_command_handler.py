@@ -4,6 +4,9 @@ from features.create_person.create_person_command import CreatePersonCommand
 from infra.person_repository import PersonRepository
 
 class CreatePersonCommandHandler:
+    def __init__(self, repo: PersonRepository):
+        self.repo = repo
+
     async def handle_create_person(self, cmd: CreatePersonCommand) -> str:
         person = Person(
             id=str(uuid4()),
@@ -19,8 +22,7 @@ class CreatePersonCommandHandler:
             is_pep=cmd.is_pep
         )
 
-        repo = PersonRepository()
-        await repo.save(person)
+        await self.repo.save(person)
 
         return person.id
  

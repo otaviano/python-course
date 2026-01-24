@@ -6,14 +6,15 @@ from models.person import Person
 from infra.person_repository import PersonRepository
 
 class GetPersonQueryHandler:
+    def __init__(self, repo: PersonRepository):
+        self.repo = repo
+
     async def handle_get_person(self, query: GetPersonQuery) -> Person:
-        repo = PersonRepository()
-        person = await repo.get_by_id(query.id)
+        person = await self.repo.get_by_id(query.id)
 
         return person
  
     async def handle_get_all_person(self, query: GetAllPersonQuery) -> List[Person]:
-        repo = PersonRepository()
-        people = await repo.get_all()
+        people = await self.repo.get_all()
 
         return people
