@@ -1,4 +1,4 @@
-from ast import List
+from typing import List
 from uuid import uuid4
 from features.get_person.get_person_query import GetPersonQuery
 from features.get_person.get_all_person_query import GetAllPersonQuery
