@@ -2,6 +2,8 @@
 
 This project is part of the Udemy course [Python 3 do Zero ao Avançado](https://www.udemy.com/course/python-3-do-zero-ao-avancado/). It demonstrates building a REST API for managing persons using FastAPI, MongoDB, and Docker with modern software architecture patterns.
 
+While I started with the structured course, I found that the early modules covered concepts I had already mastered. To challenge myself and accelerate my learning, I decided to pivot toward building a custom API. This allowed me to focus on high-impact skills and apply the architecture patterns I find most relevant to real-world development.
+
 ## Features
 
 - Create, read, and retrieve persons
